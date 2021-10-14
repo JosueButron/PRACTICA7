@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="VentasModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="producto">
+    <Key>
+      <PropertyRef Name="codpro" />
+    </Key>
+    <Property Name="codpro" Type="Int32" Nullable="false" />
+    <Property Name="descipcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="stock" Type="Int32" />
+  </EntityType>
+  <EntityContainer Name="VentasEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="producto" EntityType="Self.producto" />
+  </EntityContainer>
+</Schema>

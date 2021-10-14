@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="VentasModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Numero" />
+          </Key>
+          <Property Name="Numero" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="direccion" Type="nvarchar" MaxLength="50" />
+          <Property Name="telefono" Type="int" />
+          <Property Name="correo" Type="nvarchar" MaxLength="50" />
+          <Property Name="edad" Type="int" />
+        </EntityType>
+        <EntityType Name="producto">
+          <Key>
+            <PropertyRef Name="codpro" />
+          </Key>
+          <Property Name="codpro" Type="int" Nullable="false" />
+          <Property Name="descipcion" Type="nvarchar" MaxLength="50" />
+          <Property Name="stock" Type="int" />
+        </EntityType>
+        <EntityType Name="Ventas">
+          <Key>
+            <PropertyRef Name="nro_venta" />
+          </Key>
+          <Property Name="nro_venta" Type="int" Nullable="false" />
+          <Property Name="Cantidad" Type="int" />
+          <Property Name="precio" Type="int" />
+        </EntityType>
+        <EntityContainer Name="VentasModel1StoreContainer">
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="producto" EntityType="Self.producto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ventas" EntityType="Self.Ventas" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="VentasModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Numero" />
+          </Key>
+          <Property Name="Numero" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="telefono" Type="Int32" />
+          <Property Name="correo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="edad" Type="Int32" />
+          <NavigationProperty Name="Ventas" Relationship="VentasModel1.ClientVentas" FromRole="Client" ToRole="Ventas" />
+          </EntityType>
+        <EntityType Name="producto">
+          <Key>
+            <PropertyRef Name="codpro" />
+          </Key>
+          <Property Name="codpro" Type="Int32" Nullable="false" />
+          <Property Name="descipcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="stock" Type="Int32" />
+          <NavigationProperty Name="Ventas" Relationship="VentasModel1.productoVentas" FromRole="producto" ToRole="Ventas" />
+        </EntityType>
+        <EntityType Name="Ventas">
+          <Key>
+            <PropertyRef Name="nro_venta" />
+          </Key>
+          <Property Name="nro_venta" Type="Int32" Nullable="false" />
+          <Property Name="Cantidad" Type="Int32" />
+          <Property Name="precio" Type="Int32" />
+          <NavigationProperty Name="Client" Relationship="VentasModel1.ClientVentas" FromRole="Ventas" ToRole="Client" />
+          <NavigationProperty Name="producto" Relationship="VentasModel1.productoVentas" FromRole="Ventas" ToRole="producto" />
+        </EntityType>
+        <EntityContainer Name="VentasEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Client" EntityType="Self.Client" />
+          <EntitySet Name="producto" EntityType="Self.producto" />
+          <EntitySet Name="Ventas" EntityType="Self.Ventas" />
+          <AssociationSet Name="ClientVentas" Association="VentasModel1.ClientVentas">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Ventas" EntitySet="Ventas" />
+          </AssociationSet>
+          <AssociationSet Name="productoVentas" Association="VentasModel1.productoVentas">
+            <End Role="producto" EntitySet="producto" />
+            <End Role="Ventas" EntitySet="Ventas" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="ClientVentas">
+          <End Type="VentasModel1.Client" Role="Client" Multiplicity="1" />
+          <End Type="VentasModel1.Ventas" Role="Ventas" Multiplicity="*" />
+        </Association>
+        <Association Name="productoVentas">
+          <End Type="VentasModel1.producto" Role="producto" Multiplicity="1" />
+          <End Type="VentasModel1.Ventas" Role="Ventas" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="VentasModel1StoreContainer" CdmEntityContainer="VentasEntities1">
+          <EntitySetMapping Name="Client">
+            <EntityTypeMapping TypeName="VentasModel1.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="edad" ColumnName="edad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="producto">
+            <EntityTypeMapping TypeName="VentasModel1.producto">
+              <MappingFragment StoreEntitySet="producto">
+                <ScalarProperty Name="codpro" ColumnName="codpro" />
+                <ScalarProperty Name="descipcion" ColumnName="descipcion" />
+                <ScalarProperty Name="stock" ColumnName="stock" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ventas">
+            <EntityTypeMapping TypeName="VentasModel1.Ventas">
+              <MappingFragment StoreEntitySet="Ventas">
+                <ScalarProperty Name="nro_venta" ColumnName="nro_venta" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

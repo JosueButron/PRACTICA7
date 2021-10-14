@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="VentasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'Ventas.dbo.Cliente' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="Cliente">
+          <Property Name="Numero" Type="int" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="Direccion" Type="nvarchar" MaxLength="50" />
+          <Property Name="Telefono" Type="nvarchar" MaxLength="50" />
+          <Property Name="Correo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Edad" Type="nvarchar" MaxLength="50" />
+        </EntityType>-->
+  <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'Ventas.dbo.CLIENTES' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="CLIENTES">
+          <Property Name="Numero" Type="int" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="direccion" Type="nchar" MaxLength="10" />
+          <Property Name="telefono" Type="int" />
+          <Property Name="correo" Type="nvarchar" MaxLength="50" />
+          <Property Name="edad" Type="int" />
+        </EntityType>-->
+  <EntityType Name="producto">
+    <Key>
+      <PropertyRef Name="codpro" />
+    </Key>
+    <Property Name="codpro" Type="int" Nullable="false" />
+    <Property Name="descipcion" Type="nvarchar" MaxLength="50" />
+    <Property Name="stock" Type="int" />
+  </EntityType>
+  <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'Ventas.dbo.Productos' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="Productos">
+          <Property Name="codpro" Type="int" />
+          <Property Name="nompro" Type="nvarchar" MaxLength="50" />
+          <Property Name="precio" Type="decimal" Precision="6" Scale="2" />
+          <Property Name="stock" Type="decimal" Precision="6" Scale="2" />
+        </EntityType>-->
+  <EntityContainer Name="VentasModelStoreContainer">
+    <EntitySet Name="producto" EntityType="Self.producto" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

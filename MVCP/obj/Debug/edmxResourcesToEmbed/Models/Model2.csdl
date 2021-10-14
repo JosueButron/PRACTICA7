@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="VentasModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="Numero" />
+    </Key>
+    <Property Name="Numero" Type="Int32" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="telefono" Type="Int32" />
+    <Property Name="correo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="edad" Type="Int32" />
+    <NavigationProperty Name="Ventas" Relationship="VentasModel1.ClientVentas" FromRole="Client" ToRole="Ventas" />
+  </EntityType>
+  <EntityType Name="producto">
+    <Key>
+      <PropertyRef Name="codpro" />
+    </Key>
+    <Property Name="codpro" Type="Int32" Nullable="false" />
+    <Property Name="descipcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="stock" Type="Int32" />
+    <NavigationProperty Name="Ventas" Relationship="VentasModel1.productoVentas" FromRole="producto" ToRole="Ventas" />
+  </EntityType>
+  <EntityType Name="Ventas">
+    <Key>
+      <PropertyRef Name="nro_venta" />
+    </Key>
+    <Property Name="nro_venta" Type="Int32" Nullable="false" />
+    <Property Name="Cantidad" Type="Int32" />
+    <Property Name="precio" Type="Int32" />
+    <NavigationProperty Name="Client" Relationship="VentasModel1.ClientVentas" FromRole="Ventas" ToRole="Client" />
+    <NavigationProperty Name="producto" Relationship="VentasModel1.productoVentas" FromRole="Ventas" ToRole="producto" />
+  </EntityType>
+  <EntityContainer Name="VentasEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Client" EntityType="Self.Client" />
+    <EntitySet Name="producto" EntityType="Self.producto" />
+    <EntitySet Name="Ventas" EntityType="Self.Ventas" />
+    <AssociationSet Name="ClientVentas" Association="VentasModel1.ClientVentas">
+      <End Role="Client" EntitySet="Client" />
+      <End Role="Ventas" EntitySet="Ventas" />
+    </AssociationSet>
+    <AssociationSet Name="productoVentas" Association="VentasModel1.productoVentas">
+      <End Role="producto" EntitySet="producto" />
+      <End Role="Ventas" EntitySet="Ventas" />
+    </AssociationSet>
+  </EntityContainer>
+  <Association Name="ClientVentas">
+    <End Type="VentasModel1.Client" Role="Client" Multiplicity="1" />
+    <End Type="VentasModel1.Ventas" Role="Ventas" Multiplicity="*" />
+  </Association>
+  <Association Name="productoVentas">
+    <End Type="VentasModel1.producto" Role="producto" Multiplicity="1" />
+    <End Type="VentasModel1.Ventas" Role="Ventas" Multiplicity="*" />
+  </Association>
+</Schema>
